@@ -5,6 +5,9 @@
 package daw;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,7 +55,45 @@ public class Tarea7g {
         System.out.println(mapPrepAcumulada.toString());
         
         
+        //Guarda en un fichero JSON, en la raíz del proyecto, el resultado del 
+        //map. Pasa el objeto map directamente a la hora de generar el archivo.
         
+        
+        try{
+            Metodos.escribirJson("mapa.json", mapPrepAcumulada);
+        }catch(IOException ioe){
+            System.out.println("error escribiendo fichero");
+        }
+        
+        //sando API Stream, muestra por consola el registro que tiene la mayor precipitación.
+        System.out.println("mayor precipitacion: " + 
+                lista.stream()
+                .mapToDouble(p-> p.getPrecipitacion())
+                .max()
+        );
+        
+        //Usando API Stream, muestra por consola el número de estaciones 
+        //meteorológicas que han sido leídas entre el 10 de octubre de 2017 y el
+        //20 de octubre de 2017, ambos días incluidos.
+        
+        lista.stream()
+                .filter(p -> p.getFecha().isBefore(LocalDate.of(2017, 10, 21)))
+                .filter(p-> p.getFecha().isAfter(LocalDate.of(2017,10, 9)))
+                .forEach(p -> System.out.println(p));
+                
+        //Usando API Stream, calcula la media de precipitaciones de aquellas 
+        //estaciones meteorológicas leídas entre el 10 de octubre de 2017 y el 
+        //20 de octubre de 2017, ambos días incluidos.
+        
+        double media= lista.stream()
+                .filter(p -> p.getFecha().isBefore(LocalDate.of(2017, 10, 21)))
+                .filter(p-> p.getFecha().isAfter(LocalDate.of(2017,10, 9)))
+                .mapToDouble(p -> p.getPrecipitacion())
+                .average()
+                .getAsDouble();
+        
+        System.out.println("media precipitacion : " + media);
+                
         
     }
 }
