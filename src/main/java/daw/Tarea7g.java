@@ -92,7 +92,7 @@ public class Tarea7g {
                 .average()
                 .getAsDouble();
         
-        System.out.println("media precipitacion : " + media);
+        System.out.println("media precipitacion : %.2f".formatted(media));
                 
         
     }
