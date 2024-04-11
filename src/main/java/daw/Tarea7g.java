@@ -6,13 +6,12 @@ package daw;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.Month;
-import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import javax.swing.JFrame;
 
 /**
  *
@@ -21,6 +20,20 @@ import java.util.stream.Collectors;
 public class Tarea7g {
 
     public static void main(String[] args) {
+        
+        // Construimos la ventana
+	JFrame ventanaPrincipal = new JFrame ("Aplicación");
+
+	// Establecemos posición y tamaño
+	ventanaPrincipal.setBounds(250, 250, 800, 600);
+
+	// Hacemos visible la ventana
+	ventanaPrincipal.setVisible(true);
+
+// Acción por defecto al pulsar el botón de cierre 	 ventanaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        
+        
          ArrayList<Precipitacion> lista = new ArrayList<>();
         
          
@@ -72,14 +85,27 @@ public class Tarea7g {
                 .max()
         );
         
+        
+        //necesitamos el registro
+        System.out.println("mayor precipitacion: " + 
+                lista.stream()
+                 .max(Comparator.comparingDouble(p-> p.getPrecipitacion()))
+                        .get().toString());
+                
+                
+        
+        
         //Usando API Stream, muestra por consola el número de estaciones 
         //meteorológicas que han sido leídas entre el 10 de octubre de 2017 y el
         //20 de octubre de 2017, ambos días incluidos.
         
+        System.out.println(" numero de estaciones entre 10-102017 y 20-10-2017:  " +
         lista.stream()
                 .filter(p -> p.getFecha().isBefore(LocalDate.of(2017, 10, 21)))
                 .filter(p-> p.getFecha().isAfter(LocalDate.of(2017,10, 9)))
-                .forEach(p -> System.out.println(p));
+                //.forEach(p -> System.out.println(p));
+                .count()
+        );
                 
         //Usando API Stream, calcula la media de precipitaciones de aquellas 
         //estaciones meteorológicas leídas entre el 10 de octubre de 2017 y el 
